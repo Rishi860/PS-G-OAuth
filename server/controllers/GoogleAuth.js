@@ -15,14 +15,10 @@ module.exports = {
       });
       const payload = ticket.getPayload();
       // const userid = payload['sub'];
-      const count = await User.countDocuments({});
       const data = {
         name: payload.name,
         email: payload.email,
-        // password: hashedPassword,
         imageUrl: payload.picture,
-        // first user is admin
-        role: count ===0 ? "admin":"customer"
       }
 
       const newUser = await User.create(data);
@@ -32,7 +28,6 @@ module.exports = {
         token,
         user: {
           name: newUser.name,
-          role: newUser.role,
           imageUrl :newUser.imageUrl,
           _id: newUser._id,
           email: newUser.email,
@@ -41,7 +36,6 @@ module.exports = {
       // If request specified a G Suite domain:
       // const domain = payload['hd'];
     } catch (err) {
-      console.log(err)
       res.status(400).send({
         error: 'email id already in use'
       })
@@ -84,7 +78,6 @@ module.exports = {
       // If request specified a G Suite domain:
       // const domain = payload['hd'];
     } catch (err) {
-      console.log(err)
       res.status(400).send({
         error: 'Server error occured kindly retry after some time.'
       })

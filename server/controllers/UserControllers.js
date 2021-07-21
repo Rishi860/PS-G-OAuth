@@ -8,8 +8,9 @@ module.exports = {
       const data = await GoogleAuth.register(id_token);
       res.send(data)
     } catch (err) {
+      console.log(err)
       res.status(400).send({
-        error: 'Server error! Kindly retry after some time.'
+        error: `this is error  ---${err}`
       })
     }
   },
